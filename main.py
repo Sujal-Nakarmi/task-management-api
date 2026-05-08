@@ -2,8 +2,6 @@ from fastapi import FastAPI, Request
 from database.database import Base, engine
 from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
-import models.task
-import models.user
 from routes import users, tasks
 
 # Create all database tables automatically
@@ -17,6 +15,7 @@ app = FastAPI(
 
 # Connect all routes
 app.include_router(users.router)
+app.include_router(tasks.router)
 
 
 # Clean validation error messages

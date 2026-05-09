@@ -24,6 +24,8 @@ def create_task(
         title=task.title,
         description=task.description,
         completed=task.completed,
+        priority=task.priority,
+        due_date=task.due_date,
         owner_id=current_user.id
     )
     db.add(new_task)
@@ -52,7 +54,7 @@ def get_all_tasks(
 def get_task(
     task_id: int,
     db: Session = Depends(get_db),
-    current_user: task_model.User = Depends(get_current_user)
+    current_user: user_model.User = Depends(get_current_user)
 ):
     """Get a single task by ID"""
     task = db.query(task_model.Task).filter(
@@ -72,7 +74,7 @@ def update_task(
     task_id: int,
     updated_task: task_schema.TaskUpdate,
     db: Session = Depends(get_db),
-    current_user: task_model.User = Depends(get_current_user)
+    current_user: user_model.User = Depends(get_current_user)
 ):
     """Update a task by ID"""
     task = db.query(task_model.Task).filter(
@@ -90,6 +92,10 @@ def update_task(
         task.description = updated_task.description
     if updated_task.completed is not None:
         task.completed = updated_task.completed
+    if updated_task.priority is not None:
+        task.priority = updated_task.priority
+    if updated_task.due_date is not None:
+        task.due_date = updated_task.due_date
 
     db.commit()
     db.refresh(task)
@@ -98,11 +104,11 @@ def update_task(
 
 # DELETE TASK 
 
-@router.delete("/{task_id}", status_code=204)
+@router.delete("/{task_id}")
 def delete_task(
     task_id: int,
     db: Session = Depends(get_db),
-    current_user: task_model.User = Depends(get_current_user)
+    current_user: user_model.User = Depends(get_current_user)
 ):
     """Delete a task by ID"""
     task = db.query(task_model.Task).filter(
@@ -115,4 +121,4 @@ def delete_task(
 
     db.delete(task)
     db.commit()
-    return None
+    return {"detail": "Task deleted successfully"}

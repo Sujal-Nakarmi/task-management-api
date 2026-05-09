@@ -13,7 +13,7 @@ router = APIRouter(
     tags=["Users"]
 )
 
-# REGISTER 
+#  REGISTER 
 
 @router.post("/register", response_model=user_schema.UserResponse, status_code=201)
 def register(user: user_schema.UserCreate, db: Session = Depends(get_db)):
@@ -53,6 +53,7 @@ def register(user: user_schema.UserCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(new_user)
     return new_user
+
 
 
 # LOGIN 

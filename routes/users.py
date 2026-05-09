@@ -13,7 +13,7 @@ router = APIRouter(
     tags=["Users"]
 )
 
-# ─── REGISTER ────────────────────────────────────
+# REGISTER 
 
 @router.post("/register", response_model=user_schema.UserResponse, status_code=201)
 def register(user: user_schema.UserCreate, db: Session = Depends(get_db)):
@@ -55,7 +55,7 @@ def register(user: user_schema.UserCreate, db: Session = Depends(get_db)):
     return new_user
 
 
-# ─── LOGIN ───────────────────────────────────────
+# LOGIN 
 
 @router.post("/login", response_model=token_schema.Token)
 def login(
@@ -89,7 +89,7 @@ def login(
     }
 
 
-# ─── GET MY PROFILE ──────────────────────────────
+# GET MY PROFILE 
 
 @router.get("/me", response_model=user_schema.UserResponse)
 def get_my_profile(current_user: user_model.User = Depends(security.get_current_user)):

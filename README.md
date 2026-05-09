@@ -26,6 +26,10 @@ Python Official Website for Windows
 
 https://www.python.org/downloads/windows/ 
 
+Python Official Website for Mac
+
+https://www.python.org/downloads/macos/
+
  
 
 Step 3: Create Virtual Environment and Activate it  

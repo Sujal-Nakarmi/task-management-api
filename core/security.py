@@ -11,12 +11,12 @@ import models.user as user_model
 import schemas.token as token_schema
 
 
-# ─── PASSWORD HASHING ────────────────────────────
+# PASSWORD HASHING 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="users/login")
 
-# ─── PASSWORD FUNCTIONS ──────────────────────────
+# PASSWORD FUNCTIONS 
 
 def hash_password(password: str) -> str:
     """Convert plain password to hashed password"""
@@ -26,7 +26,7 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
     """Check if plain password matches hashed password"""
     return pwd_context.verify(plain_password, hashed_password)
 
-# ─── TOKEN FUNCTIONS ─────────────────────────────
+# TOKEN FUNCTIONS 
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     """Create a JWT token"""
@@ -39,7 +39,7 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
-# ─── GET CURRENT USER ────────────────────────────
+# GET CURRENT USER 
 
 def get_current_user(
     token: str = Depends(oauth2_scheme),
